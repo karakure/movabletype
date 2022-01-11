@@ -1,0 +1,148 @@
+<mt:Ignore>３階層を表示</mt:Ignore>
+<!DOCTYPE HTML>
+<html lang="ja">
+<head>
+<MTInclude blog_id="3" module="google_tag_manager">
+<MTInclude module="meta">
+</head>
+<body>
+<MTFor replace="https://aaa.co.jp/","/">
+<mt:Ignore>出しわけ用</mt:Ignore>
+<mt:Ignore>配下の判定用（$helpCategory）</mt:Ignore>
+<mt:SetVarBlock name="helpCategory"><mt:TopLevelParent><$mt:CategoryLabel$></mt:TopLevelParent></mt:SetVarBlock>
+
+<MTInclude blog_id="3" module="google_tagmanager_noscript">
+<MTInclude blog_id="3" module="noscript">
+  <header class="header">
+    <MTInclude module="header">
+    <nav class="header__breadcrumb">
+      <ol class="header__breadcrumb__list">
+      <li class="header__breadcrumb__listItem"><a href="/service/">TOP</a></li>
+      <mt:ParentCategories>
+      <li class="header__breadcrumb__listItem"><a href="/service/<$mt:SubCategoryPath$>/"><$mt:CategoryLabel$></a></li>
+      </mt:ParentCategories>
+      </ol>
+    </nav>
+
+    <mt:If tag="CategoryLabel" eq="ヘルプ"><mt:Ignore>ヘルプトップだけキービジュアルを表示</mt:Ignore>
+    <div class="keyvisual">
+      <img src="/service/images/aaa.png" class="pc" width="80" alt="">
+      <img src="/service/images/bbb.png" class="sp" width="60" alt="">
+      <h1 class="keyvisual__title"><$mt:CategoryLabel$></h1>
+    </div>
+    </mt:If>
+
+  </header>
+  <mt:SetVarBlock name="category"><$mt:CategoryLabel$></mt:SetVarBlock>
+
+  <mt:If tag="CategoryLabel" ne="ヘルプ"><mt:Ignore>ヘルプトップには出さない</mt:Ignore>
+  <section class="main category__<$mt:CategoryBasename default="no_category"$><mt:If name="helpCategory" eq="ヘルプ"> category__help</mt:if>">
+    <h1 class="category__archivetitle"><$mt:CategoryLabel$></h1>
+
+    <div class="category__archivelistmain">
+        <ul class="category__archivelist">
+          <li>
+              <mt:entries>
+                <mt:ifcategory label="$category">
+                 <mt:If name="helpCategory" eq="ヘルプ"><mt:Ignore>ヘルプ配下だけ　class名変更</mt:Ignore>
+                 <li class="category__archivelistitem"><a href="<$mt:EntryLink$>"><p class="category__archivelisttext"><span class="archive__qTitle"><$mt:EntryTitle$></span></p></a></li>
+                 <mt:Else>
+                 <li class="category__archivelistitem"><a href="<$mt:EntryLink$>"><p class="category__archivelisttext"><span class="qTitle"><$mt:EntryTitle$></span></p></a></li>
+                 </mt:if>
+                 </mt:ifcategory>
+              </mt:entries>
+          </li>
+        </ul>
+    </div>
+    <mt:Ignore>ヘルプ カテゴリ一覧のみに表示</mt:Ignore>
+    <div class="bottom_naviLink">
+      <mt:If name="helpCategory" eq="ヘルプ"><mt:Ignore>ヘルプカテゴリのみ表示</mt:Ignore>
+      <p class="bottom_naviItem"><a href="/service/help/" class="linkText">ヘルプトップへ戻る</a></p>
+      <mt:Else>
+      <p class="bottom_naviItem"><a href="/service/" class="linkText">トップへ戻る</a></p>
+      </mt:If>
+    </div>
+  </section>
+  </mt:If>
+
+<mt:If tag="CategoryLabel" eq="ヘルプ"><mt:Ignore>ヘルプトップ カテゴリ一覧</mt:Ignore>
+<$mt:SetVar name="depth" value="2"$>
+<$mt:SetVar name="labelClassName" value="1"$>
+<div class="main help__main" id="main">
+
+    <ul class="faqCategory">
+        <mt:SubCategories>
+        <mt:unless tag="CategoryLabel" eq="その他のヘルプ">
+        <mt:SubCatIsFirst>
+        <ul class="faqList hierarchy_<mt:Var name="depth">">
+        </mt:SubCatIsFirst>
+
+        <mt:if name="depth" eq="1">
+          <mt:Ignore>大カテゴリ</mt:Ignore>
+            <li class="parent"><h1 class="helpCategoriesfirst"><a href="<$mt:CategoryArchiveLink$>"><$mt:CategoryLabel$></a></h1>
+        </mt:if>
+        <mt:if name="depth" eq="2">
+            <li class="child"><h2 class="main__title"><span class="main__titletext"><$mt:CategoryLabel$></span></h2>
+                <mt:SubCatIsLast>
+                    <mt:Ignore>全ての小カテゴリの最後のリスト</mt:Ignore>
+
+                    <ul class="hierarchy_<mt:Var name="depth">">
+                        <li class="top__category-block">
+
+                            <input id="top__category-block__<mt:Var name="labelClassName">" class="input--hide" type="checkbox" checked="checked" value="top__category-block__<mt:Var name="labelClassName">">
+                            <label class="top__category-title" for="top__category-block__<mt:Var name="labelClassName">"><mt:CategoryLabel></label>
+                            <div class="top__category-list">
+                                <ul>
+                                <mt:entries lastn="4">
+                                <li><a href="<$mt:EntryLink$>"><$mt:EntryTitle$></a></li>
+                                </mt:entries>
+                                </ul>
+                                <p class="moreTxt"><a href="<$mt:CategoryArchiveLink$>" class="linkText">すべて見る</a></p>
+                            </div>
+
+                </mt:SubCatIsLast>
+
+        </mt:if>
+        <mt:if name="depth" eq="3">
+            <li class="top__category-block">
+                <mt:Ignore>小カテゴリ</mt:Ignore>
+                <input id="top__category-block__<mt:Var name="labelClassName">" class="input--hide" type="checkbox" checked="checked" value="top__category-block__<mt:Var name="labelClassName">">
+                <label class="top__category-title" for="top__category-block__<mt:Var name="labelClassName">"><mt:CategoryLabel></label>
+                <div class="top__category-list">
+                    <ul>
+                        <mt:entries lastn="4">
+                        <li><a href="<$mt:EntryLink$>"><span class="archive__qTitle"><$mt:EntryTitle$></span></a></li>
+                        </mt:entries>
+                    </ul>
+                    <p class="moreTxt"><a href="<$mt:CategoryArchiveLink$>" class="linkText">すべて見る</a></p>
+                </div>
+
+                <mt:SubCatIsLast>
+                    <mt:Ignore>小カテゴリの最後</mt:Ignore>
+                <mt:else>
+                    <mt:Ignore>小カテゴリ</mt:Ignore>
+                </mt:SubCatIsLast>
+        </mt:if>
+        <$mt:SetVar name="labelClassName" op="++"$>
+        <$mt:SetVar name="depth" op="++"$>
+        <$mt:SubCatsRecurse$>
+        <$mt:SetVar name="depth" op="--"$>
+        </li>
+
+        <mt:SubCatIsLast>
+
+        </ul>
+        </mt:SubCatIsLast>
+
+        </mt:unless>
+        </mt:SubCategories>
+
+        <p class="bottom_naviLink"><a href="/service/index.html" class="linkText">トップへ戻る</a></p>
+</div>
+
+</mt:If><mt:Ignore>ここまで：ヘルプトップ</mt:Ignore>
+
+  <MTInclude module="footer">
+</MTFor>
+</body>
+</html>
