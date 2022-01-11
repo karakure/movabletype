@@ -1,0 +1,56 @@
+<!DOCTYPE HTML>
+<html lang="ja">
+<head>
+<MTInclude blog_id="3" module="google_tag_manager">
+<MTInclude module="meta">
+</head>
+<body>
+<MTInclude blog_id="3" module="google_tagmanager_noscript">
+<MTInclude blog_id="3" module="noscript">
+  <header class="header">
+    <MTInclude  module="header">
+    <nav class="header__breadcrumb">
+      <ol class="header__breadcrumb__list">
+      <li class="header__breadcrumb__listItem"><a href="/service/">タイトル</a></li>
+
+<mt:ParentCategories>
+            <li class="header__breadcrumb__listItem scroll-target"><a href="/service/<$mt:SubCategoryPath$>/"><$mt:CategoryLabel$></a></li>
+</mt:ParentCategories>
+      </ol>
+    </nav>
+  </header>
+
+<mt:Ignore>カテゴリ判定用（$helpCategory）</mt:Ignore>
+<mt:SetVarBlock name="helpCategory"><mt:TopLevelParent><$mt:CategoryLabel$></mt:TopLevelParent></mt:SetVarBlock>
+
+  <div class="main archive__main <mt:If name="helpCategory" eq="ヘルプ"> archive__faq</mt:if>">
+   <div class="main__detailbox">
+   <mt:Ignore>ヘルプ記事のみclass追加　</mt:Ignore>
+   <mt:If name="helpCategory" eq="ヘルプ">
+   <h1 class="main__title"><span class="main__titletext archive__qTitle"><$mt:EntryTitle$></span></h1>
+   <mt:else>
+    <h1 class="main__title"><span class="main__titletext"><$mt:EntryTitle$></span></h1>
+   </mt:If>
+    <$mt:EntryBody mteval="1"$>
+   </div>
+   <mt:If name="helpCategory" eq="ヘルプ">
+   <div class="side">
+     <MTInclude module="faq_categorylist">
+   </div>
+   </mt:If>
+  </div>
+
+  <MTInclude module="footer">
+
+<mt:Ignore>パンくずはみ出した際に右に寄せる用</mt:Ignore>
+<script>
+var scrollTarget = document.querySelector('.scroll-target');
+if (scrollTarget) {
+    scrollTarget.scrollIntoView({
+        inline: "start"
+    });
+    scrollTarget.scrollIntoView(false);
+}
+</script>
+</body>
+</html>
